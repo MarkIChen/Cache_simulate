@@ -3,7 +3,7 @@
 
 #include<iostream>
 #include <bitset>
-#include "Cache.cpp"
+#include "Cache_class.cpp"
 
 class Controler{
     int asso, policy;

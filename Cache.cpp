@@ -1,46 +1,61 @@
-
 #include<iostream>
-#include "block.cpp"
+#include<fstream>
+#include <string>
+#include <cmath>
+#include <iomanip>
+#include <sstream>
+#include <fstream>
+#include <stdlib.h> 
+#include "Controler.cpp"
 using namespace std;
-class Cache {
-    public:
-        bool valid;
-        int tag;
 
-    // Cache():valid(0), tag(-1){
+int main(){
+    string line;
+    int cache_size, block_size, associate, policy, index_len, offset, tag_size;
+    
+    long x;
+
+    ifstream t1_file("trace1.txt");
+    ofstream t1_out_file("trace1_out.txt");
+
+    if(t1_file.is_open()){
+        getline(t1_file, line);
+        cache_size =  stoi(line);
+        getline(t1_file, line);
+        block_size = stoi(line);
+        getline(t1_file, line);
+        associate = stoi(line);
+        getline(t1_file, line);
+        policy = stoi(line);
+
+        cout << cache_size << endl;
+        cout << block_size << endl;
+        cout << associate << endl;
+        cout << policy <<endl;
+
+        index_len = log2(cache_size/block_size) + 10;
+        offset = log2(block_size);
+        tag_size = 32 - (index_len + offset);
+
+        cout << "index_len = " << index_len <<endl;
+        cout << "offset = " << offset << endl;
+        cout << "tag_size = " << tag_size << endl;
+
+        Controler *controler = new Controler(associate, policy, index_len, tag_size);
         
-    // }
-
-    virtual int read(int tag_dec, int index_dec){
-        cout<<"this is parent read func";
-        return -2;
-    }
-};
-
-class Direct_map : public Cache{
-    public:
-    struct Block *block_ptr;
-
-    Direct_map(int block_size){
-        block_ptr = new Block[block_size];
-    }
-
-    int read(int tag_dec, int index_dec){
-
-        if(block_ptr[index_dec].valid == 0){
-            cout<<"load new data"<<endl;
-            tag = tag_dec;
-            valid = 1;
-            return -1;
-        }else if(block_ptr[index_dec].tag == tag_dec){
-            cout<<"hit"<<endl;
-            return -1;
-        } else {
-            cout<<"miss"<<endl;
-            int victim = tag;
-            tag = tag_dec;
-            return victim;
+        while(getline(t1_file, line)){
+            t1_out_file<<controler->read(line)<<endl;
         }
-    }
-};
+        
+     
+   
 
+    } else{
+        cout<<"unable to open"<<endl; 
+    }
+
+
+    t1_file.close();
+    t1_out_file.close();
+    return 0;
+}
