@@ -1,17 +1,17 @@
-#ifndef CACHE_H
-#define CACHE_H
+
 #include<iostream>
+#include "block.cpp"
 using namespace std;
 class Cache {
     public:
         bool valid;
         int tag;
 
-    Cache():valid(0), tag(-1){
+    // Cache():valid(0), tag(-1){
         
-    }
+    // }
 
-    virtual int read(int tag_dec){
+    virtual int read(int tag_dec, int index_dec){
         cout<<"this is parent read func";
         return -2;
     }
@@ -19,14 +19,20 @@ class Cache {
 
 class Direct_map : public Cache{
     public:
-    int read(int tag_dec){
+    struct Block *block_ptr;
 
-        if(valid == 0){
+    Direct_map(int block_size){
+        block_ptr = new Block[block_size];
+    }
+
+    int read(int tag_dec, int index_dec){
+
+        if(block_ptr[index_dec].valid == 0){
             cout<<"load new data"<<endl;
             tag = tag_dec;
             valid = 1;
             return -1;
-        }else if(tag == tag_dec){
+        }else if(block_ptr[index_dec].tag == tag_dec){
             cout<<"hit"<<endl;
             return -1;
         } else {
@@ -38,4 +44,3 @@ class Direct_map : public Cache{
     }
 };
 
-#endif

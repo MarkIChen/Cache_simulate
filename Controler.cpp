@@ -1,5 +1,4 @@
 #include "Controler.h"
-#include "Cache.h"
 #include <math.h> 
 using namespace std;
 
@@ -14,14 +13,10 @@ Controler::Controler(int asso, int policy, int index_len, int tag_size){
 
 void Controler:: setCache(){
     if(asso ==0){
-        int map_size = pow(2, index_len);
-        // int map_size = pow(2, 3);
+        int block_size = pow(2, index_len);
 
-        // cout<<"this is direct map  map_size = "<<map_size<<endl;
-        ca = new Direct_map[map_size];
-        for(int i = 0; i < map_size; i++){
-            // cout<<"i = "<<i<<" valid = "<<ca[i].valid<<" tag = "<< ca[i].tag<<endl;
-        }
+        ca = new Direct_map(block_size);
+
     }
 }
 
@@ -45,26 +40,10 @@ int Controler:: read(string line){
     const char *cstr3 = index.c_str();
     int index_dec = strtol(cstr3 , NULL, 2);
 
-    cout << addr << " " << "tag = " <<tag << " index = " <<index<< endl;
+    // cout << addr << " " << "tag = " <<tag << " index = " <<index<< endl;
     cout << "tag_dec = "<<tag_dec<<" index_dec = "<<index_dec<<endl;
-    // cout<<"ca[index_dec] = "<<ca[index_dec].tag<<endl<<endl;
-    
-    // if(ca[index_dec].valid == 0){
-    //     cout<<"load new data"<<endl;
-    //     ca[index_dec].tag = tag_dec;
-    //     ca[index_dec].valid = 1;
-    //     return -1;
-    // }else if(ca[index_dec].tag == tag_dec){
-    //     cout<<"hit"<<endl;
-    //     return -1;
-    // } else {
-    //     cout<<"miss"<<endl;
-    //     int victim = ca[index_dec].tag;
-    //     ca[index_dec].tag = tag_dec;
 
-    //     return victim;
-    // }
-    int re = ca[index_dec].read(tag_dec);
+    int re = ca -> read(tag_dec, index_dec);
     return re;
 
 }
