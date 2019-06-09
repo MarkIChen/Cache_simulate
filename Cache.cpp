@@ -5,8 +5,8 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
-#include <stdlib.h> 
 #include "Controler.cpp"
+#include <stdlib.h>
 using namespace std;
 
 int main(){
@@ -20,13 +20,13 @@ int main(){
 
     if(t1_file.is_open()){
         getline(t1_file, line);
-        cache_size =  stoi(line);
+        cache_size =  atoi(line.c_str());
         getline(t1_file, line);
-        block_size = stoi(line);
+        block_size = atoi(line.c_str());
         getline(t1_file, line);
-        associate = stoi(line);
+        associate = atoi(line.c_str());
         getline(t1_file, line);
-        policy = stoi(line);
+        policy = atoi(line.c_str());
 
         cout << cache_size << endl;
         cout << block_size << endl;
