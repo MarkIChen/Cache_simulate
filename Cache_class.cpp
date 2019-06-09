@@ -37,7 +37,7 @@ class Direct_map : public Cache{
             return -1;
         } else {
             cout<<"miss"<<endl;
-            int victim = tag;
+            int victim = block_ptr[index_dec].tag;
             block_ptr[index_dec].tag = tag_dec;
             return victim;
         }
