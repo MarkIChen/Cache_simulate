@@ -43,8 +43,14 @@ int main(){
 
         Controler *controler = new Controler(associate, policy, index_len, tag_size);
         
+        bool f_line = 0;
         while(getline(t1_file, line)){
-            t1_out_file<<controler->read(line)<<endl;
+            if(f_line == 0){
+                f_line = 1;
+                t1_out_file<<controler->read(line);
+            } else {
+                t1_out_file<<endl<<controler->read(line);
+            }
         }
         
      
