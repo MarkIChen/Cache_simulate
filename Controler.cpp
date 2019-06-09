@@ -2,6 +2,8 @@
 #include <math.h> 
 #include<iostream>
 #include <bitset>
+#include <stdlib.h>
+#include <stdio.h>
 #include "Cache_class.cpp"
 using namespace std;
 
