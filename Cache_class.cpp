@@ -68,10 +68,11 @@ class Four_way : public Cache {
         cout<<"set = "<<set<<endl;
 
         deque<struct Block>::iterator it = all_set.at(set).begin();
-        deque<struct Block>::iterator end = all_set.at(set).end();
+        // deque<struct Block>::iterator end = all_set.at(set).end();
 
-        while(it != end ){
-
+        int count = 0;
+        while(it != all_set.at(set).end() ){
+            cout<<"count = "<<count++<<endl;
             unsigned int tag = it->tag;
             unsigned int index = it->index;
             bool valid = it->valid;
@@ -79,16 +80,16 @@ class Four_way : public Cache {
             if(valid == 1 && tag_dec == tag && index_dec == index) { 
                 cout<<"hit"<<endl;
                 if(policy == 1 ){  //LRU
-                    // cout<<"improve privacy"<<endl<<"------"<<endl;
-                    addElement(set, index, tag);
-
+                    cout<<"improve privacy"<<endl<<"------"<<endl;
+                
                     it = all_set.at(set).erase(it);
+                    addElement(set, index, tag);
                 }
 
 
                 return -1;
             }
-            it++;
+            *it++;
         }
         
         if(all_set.at(set).size() < 4){  //not four element yet

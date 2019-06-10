@@ -45,6 +45,7 @@ int main(){
         
         bool f_line = 0;
         while(getline(t1_file, line)){
+            cout<<line<<endl;
             if(f_line == 0){
                 f_line = 1;
                 t1_out_file<<controler->read(line);
