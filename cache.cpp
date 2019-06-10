@@ -40,14 +40,14 @@ int main(int argc, char** argv){
 
         Controler *controler = new Controler(associate, policy, cache_size, block_size);
         
-        bool f_line = 0;
+        // bool f_line = 0;
         while(getline(t1_file, line)){
-            if(f_line == 0){
-                f_line = 1;
-                t1_out_file<<controler->read(line);
-            } else {
-                t1_out_file<<endl<<controler->read(line);
-            }
+            // if(f_line == 0){
+            //     f_line = 1;
+            //     t1_out_file<<controler->read(line);
+            // } else {
+                t1_out_file<<controler->read(line)<<endl;
+            // }
         }
         
      

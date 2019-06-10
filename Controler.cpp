@@ -35,7 +35,7 @@ class Controler{
 
             block_len = pow(2, block_num);
             tag_size = 32 - (index_bit + offset);
-            cout << "block_num = " << block_num <<endl;
+            cout << "totoal size of blocks = " << block_len <<endl;
             cout << "offset = " << offset << endl;
             cout << "tag_size = " << tag_size << endl;
             setCache();

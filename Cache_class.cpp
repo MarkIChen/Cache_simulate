@@ -58,6 +58,7 @@ class Four_way : public Cache {
         this -> block_len = block_len;
         this->set = set;
         block_per_set = block_len / set;
+        cout<<"block in every set = "<<block_per_set<<endl;
 
         for(int i=0; i< block_per_set; i++) {
             deque<struct Block> row(0);
