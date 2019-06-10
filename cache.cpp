@@ -19,8 +19,8 @@ int main(int argc, char** argv){
         outFile = argv[2];
     }
 
-    ifstream t1_file(inFile);
-    ofstream t1_out_file(outFile);
+    ifstream t1_file(inFile.c_str());
+    ofstream t1_out_file(outFile.c_str());
 
     if(t1_file.is_open()){
         getline(t1_file, line);
