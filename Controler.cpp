@@ -10,7 +10,7 @@ using namespace std;
 class Controler{
     int asso, policy;
     unsigned index_len, tag_size, offset;
-    unsigned cache_size, block_size;
+    unsigned cache_size, block_size, block_len;
     Cache *ca;
     std::bitset<32> addr;
 
@@ -31,7 +31,7 @@ class Controler{
                 index_len = block_num - 2;
             }
 
-            block_size = pow(2, index_len);
+            block_len = pow(2, index_len);
             tag_size = 32 - (index_len + offset);
             cout << "index_len = " << index_len <<endl;
             cout << "offset = " << offset << endl;
@@ -71,10 +71,10 @@ class Controler{
         void setCache(){
             
             if(asso ==0){
-                ca = new Direct_map(block_size);
+                ca = new Direct_map(block_len);
             }
             else if(asso == 1){ //four way
-                ca = new Four_way(block_size, policy);
+                ca = new Four_way(block_len, policy);
             }
         }
 

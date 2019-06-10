@@ -7,7 +7,7 @@ using namespace std;
 class Cache {
 
     public :
-        unsigned block_size;
+        unsigned block_len;
 
     virtual int read(int tag_dec, int index_dec){
         cout<<"this is parent read func"<<endl;
@@ -19,14 +19,14 @@ class Direct_map : public Cache{
     public:
     struct Block *block_ptr;
 
-    Direct_map(int block_size){
-        this->block_size = block_size;
-        block_ptr = new Block[block_size];
+    Direct_map(int block_len){
+        this->block_len = block_len;
+        block_ptr = new Block[block_len];
     }
 
     int read(int tag_dec, int index_dec){
         
-        index_dec = index_dec % block_size;
+        index_dec = index_dec % block_len;
 
         if(block_ptr[index_dec].valid == 0){
             cout<<"load new data"<<endl;
@@ -38,7 +38,7 @@ class Direct_map : public Cache{
             return -1;
         } else {
             cout<<"miss"<<endl;
-            int victim = block_ptr[index_dec].tag;
+            unsigned int victim = block_ptr[index_dec].tag;
             block_ptr[index_dec].tag = tag_dec;
             return victim;
         }
@@ -53,10 +53,10 @@ class Four_way : public Cache {
         deque< deque<struct Block> > all_set;
    
         
-    Four_way(int block_size, int policy){
+    Four_way(int block_len, int policy){
         this->policy = policy;
-        this -> block_size = block_size;
-        block_per_set = block_size / 4;
+        this -> block_len = block_len;
+        block_per_set = block_len / 4;
 
         for(int i=0; i< block_per_set; i++) {
             deque<struct Block> row(0);
