@@ -19,7 +19,7 @@ class Direct_map : public Cache{
     public:
     struct Block *block_ptr;
 
-    Direct_map(int block_len){
+    Direct_map(unsigned int block_len){
         this->block_len = block_len;
         block_ptr = new Block[block_len];
     }

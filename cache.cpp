@@ -9,14 +9,18 @@
 #include <stdlib.h>
 using namespace std;
 
-int main(){
+int main(int argc, char** argv){
     string line;
     int cache_size, block_size, associate, policy, index_len, offset, tag_size;
     
-    long x;
+    string inFile, outFile;
+    if(argc == 3) {
+        inFile = argv[1];
+        outFile = argv[2];
+    }
 
-    ifstream t1_file("trace1.txt");
-    ofstream t1_out_file("trace_out.txt");
+    ifstream t1_file(inFile);
+    ofstream t1_out_file(outFile);
 
     if(t1_file.is_open()){
         getline(t1_file, line);
@@ -33,8 +37,6 @@ int main(){
         cout << associate << endl;
         cout << policy <<endl;
 
-
-        
 
         Controler *controler = new Controler(associate, policy, cache_size, block_size);
         
