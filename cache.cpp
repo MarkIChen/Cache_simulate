@@ -15,8 +15,8 @@ int main(){
     
     long x;
 
-    ifstream t1_file("trace1.txt");
-    ofstream t1_out_file("trace1_out.txt");
+    ifstream t1_file("trace1_four.txt");
+    ofstream t1_out_file("trace1_test.txt");
 
     if(t1_file.is_open()){
         getline(t1_file, line);
@@ -33,7 +33,7 @@ int main(){
         cout << associate << endl;
         cout << policy <<endl;
 
-        index_len = log2(cache_size/block_size) + 10;
+        index_len = (log2(cache_size) + 10) - (log2(block_size)) ;
         offset = log2(block_size);
         tag_size = 32 - (index_len + offset);
 

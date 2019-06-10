@@ -54,10 +54,13 @@ class Controler{
     
     private:
         void setCache(){
-            if(asso ==0){
-                int block_size = pow(2, index_len);
+            int block_size = pow(2, index_len);
 
+            if(asso ==0){
                 ca = new Direct_map(block_size);
+            }
+            else if(asso == 1){ //four way
+                ca = new Four_way(block_size, policy);
 
             }
         }
