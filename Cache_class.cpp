@@ -48,15 +48,16 @@ class Direct_map : public Cache{
 class Four_way : public Cache {
 
     public :
-        unsigned int set_num, policy, block_per_set;
+        unsigned int set_num, policy, block_per_set, set;
         // Block **all_set_ptr;
         deque< deque<struct Block> > all_set;
    
         
-    Four_way(int block_len, int policy){
+    Four_way(int block_len, int policy, int set){
         this->policy = policy;
         this -> block_len = block_len;
-        block_per_set = block_len / 4;
+        this->set = set;
+        block_per_set = block_len / set;
 
         for(int i=0; i< block_per_set; i++) {
             deque<struct Block> row(0);
@@ -77,7 +78,7 @@ class Four_way : public Cache {
             if(valid == 1 && tag_dec == tag ) { 
                 cout<<"hit"<<endl;
                 if(policy == 1 ){  //LRU
-                    cout<<"improve privacy"<<endl<<"------"<<endl;
+                    cout<<"improve priority"<<endl<<"------"<<endl;
                 
                     it = all_set.at(index_dec).erase(it);
                     addElement(index_dec, tag);
@@ -87,7 +88,7 @@ class Four_way : public Cache {
             *it++;
         }
         
-        if(all_set.at(index_dec).size() < 4){  //not four element yet
+        if(all_set.at(index_dec).size() < set){  //not four element yet
             cout<<"Not full in set,  size in set = "<< all_set.at(index_dec).size()<<endl;
             cout<<"adding new element"<<endl<<"--------"<<endl;
             

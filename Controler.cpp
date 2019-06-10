@@ -9,7 +9,7 @@ using namespace std;
 
 class Controler{
     int asso, policy;
-    unsigned index_len, tag_size, offset;
+    unsigned index_bit, tag_size, offset;
     unsigned cache_size, block_size, block_len;
     Cache *ca;
     std::bitset<32> addr;
@@ -26,14 +26,16 @@ class Controler{
 
             unsigned int block_num = (log2(cache_size) + 10) - (log2(block_size));
             if (asso == 0) {
-                index_len = block_num;
+                index_bit = block_num;
             } else if (asso ==1){
-                index_len = block_num - 2;
+                index_bit = block_num - 2;
+            } else if(asso == 2) {
+                index_bit = 0;
             }
 
-            block_len = pow(2, index_len);
-            tag_size = 32 - (index_len + offset);
-            cout << "index_len = " << index_len <<endl;
+            block_len = pow(2, block_num);
+            tag_size = 32 - (index_bit + offset);
+            cout << "block_num = " << block_num <<endl;
             cout << "offset = " << offset << endl;
             cout << "tag_size = " << tag_size << endl;
             setCache();
@@ -46,11 +48,13 @@ class Controler{
 
             string tag;
             string index;
+            if(asso == 2) index = "0";
+
             for(int i = 0; i < tag_size; i++){
                 tag.append(string((addr[31 - i]) ? "1" : "0"));
                 // tag.append(addr[i]);
             }
-            for(int i = 0; i < index_len; i++){
+            for(int i = 0; i < index_bit; i++){
                 index.append(string(addr[31 - tag_size - i] ? "1" : "0"));
             }
             const char *cstr2 = tag.c_str();
@@ -74,7 +78,9 @@ class Controler{
                 ca = new Direct_map(block_len);
             }
             else if(asso == 1){ //four way
-                ca = new Four_way(block_len, policy);
+                ca = new Four_way(block_len, policy, 4);
+            } else if(asso == 2){
+                ca = new Four_way(block_len, policy, block_len);
             }
         }
 
