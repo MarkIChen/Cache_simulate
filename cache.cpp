@@ -15,8 +15,8 @@ int main(){
     
     long x;
 
-    ifstream t1_file("trace1_four.txt");
-    ofstream t1_out_file("trace1_test.txt");
+    ifstream t1_file("trace1.txt");
+    ofstream t1_out_file("trace.out");
 
     if(t1_file.is_open()){
         getline(t1_file, line);
