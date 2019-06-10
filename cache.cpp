@@ -33,19 +33,13 @@ int main(){
         cout << associate << endl;
         cout << policy <<endl;
 
-        index_len = (log2(cache_size) + 10) - (log2(block_size)) ;
-        offset = log2(block_size);
-        tag_size = 32 - (index_len + offset);
 
-        cout << "index_len = " << index_len <<endl;
-        cout << "offset = " << offset << endl;
-        cout << "tag_size = " << tag_size << endl;
+        
 
-        Controler *controler = new Controler(associate, policy, index_len, tag_size);
+        Controler *controler = new Controler(associate, policy, cache_size, block_size);
         
         bool f_line = 0;
         while(getline(t1_file, line)){
-            cout<<line<<endl;
             if(f_line == 0){
                 f_line = 1;
                 t1_out_file<<controler->read(line);

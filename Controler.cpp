@@ -9,18 +9,33 @@ using namespace std;
 
 class Controler{
     int asso, policy;
-    unsigned index_len, tag_size;
+    unsigned index_len, tag_size, offset;
+    unsigned cache_size, block_size;
     Cache *ca;
     std::bitset<32> addr;
 
     public:
    
-        Controler(int asso, int policy, int index_len, int tag_size){
+        Controler(int asso, int policy, int cache_size, int block_size){
             this->asso = asso;
             this->policy = policy;
-            this->index_len = index_len;
-            this->tag_size = tag_size;
+            this->cache_size = cache_size;
+            this->block_size = block_size;
+            
+            offset = log2(block_size);
 
+            unsigned int block_num = (log2(cache_size) + 10) - (log2(block_size));
+            if (asso == 0) {
+                index_len = block_num;
+            } else if (asso ==1){
+                index_len = block_num - 2;
+            }
+
+            block_size = pow(2, index_len);
+            tag_size = 32 - (index_len + offset);
+            cout << "index_len = " << index_len <<endl;
+            cout << "offset = " << offset << endl;
+            cout << "tag_size = " << tag_size << endl;
             setCache();
         }
 
@@ -54,14 +69,12 @@ class Controler{
     
     private:
         void setCache(){
-            int block_size = pow(2, index_len);
-
+            
             if(asso ==0){
                 ca = new Direct_map(block_size);
             }
             else if(asso == 1){ //four way
                 ca = new Four_way(block_size, policy);
-
             }
         }
 
