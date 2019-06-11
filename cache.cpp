@@ -47,6 +47,7 @@ int main(int argc, char** argv){
             //     t1_out_file<<controler->read(line);
             // } else {
                 t1_out_file<<controler->read(line)<<endl;
+                // cout<<line<<endl;
             // }
         }
         

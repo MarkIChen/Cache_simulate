@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Cache_class.cpp"
+#include "HexToBin.cpp"
 using namespace std;
 
 class Controler{
@@ -13,6 +14,8 @@ class Controler{
     unsigned cache_size, block_size, block_len;
     Cache *ca;
     std::bitset<32> addr;
+   
+    
 
     public:
    
@@ -35,24 +38,32 @@ class Controler{
 
             block_len = pow(2, block_num);
             tag_size = 32 - (index_bit + offset);
-            cout << "totoal size of blocks = " << block_len <<endl;
-            cout << "offset = " << offset << endl;
-            cout << "tag_size = " << tag_size << endl;
+            // cout << "totoal size of blocks = " << block_len <<endl;
+            // cout << "offset = " << offset << endl;
+            // cout << "tag_size = " << tag_size << endl;
             setCache();
+
+             
         }
 
+        
         int read(string line){
             const char *cstr = line.c_str();
             unsigned int num = (unsigned int)strtol(cstr , NULL, 16);
-            addr = num;
+            // string addr = HexToBin(line);
+            // cout<<"addr : "<<addr<<endl;
 
-            string tag;
-            string index;
-            if(asso == 2) index = "0";
+            addr = num;
+            // addr = 0;
+            string index, tag;
+            // tag = addr.substr(0, tag_size);
+            // index = addr.substr(tag_size, index_bit);
+            // if(asso == 2) index = "0";
+            // cout<<"tag_size "<<tag_size<<endl;
+            // cout<<"index_bit "<<index_bit<<endl;
 
             for(int i = 0; i < tag_size; i++){
                 tag.append(string((addr[31 - i]) ? "1" : "0"));
-                // tag.append(addr[i]);
             }
             for(int i = 0; i < index_bit; i++){
                 index.append(string(addr[31 - tag_size - i] ? "1" : "0"));
@@ -60,13 +71,17 @@ class Controler{
             const char *cstr2 = tag.c_str();
             int tag_dec = strtol(cstr2 , NULL, 2);
 
+
             const char *cstr3 = index.c_str();
             int index_dec = strtol(cstr3 , NULL, 2);
 
             // cout << addr << " " << "tag = " <<tag << " index = " <<index<< endl;
-            cout << "tag_dec = "<<tag_dec<<" index_dec = "<<index_dec<<endl;
+            // cout << "tag_dec = "<<tag_dec<<" index_dec = "<<index_dec<<endl;
 
             int re = ca -> read(tag_dec, index_dec);
+
+            cout<<"miss rate =  "<< ( double(ca->getMiss()) / double((ca->getMiss()) + double(ca->getHit())) )<<endl;
+            // return -1;
             return re;
 
             }
@@ -82,6 +97,22 @@ class Controler{
             } else if(asso == 2){
                 ca = new Four_way(block_len, policy, block_len);
             }
+        }
+        int fast_atoi( const char * str )
+        {
+            int val = 0;
+            while( *str ) {
+                val = val*10 + (*str++ - '0');
+            }
+            return val;
+        }
+        unsigned int naive(const char *p) {
+            unsigned int x = 0;
+            while (*p != '\0') {
+                x = (x*10) + (*p - '0');
+                ++p;
+            }
+            return x;
         }
 
 };
