@@ -143,8 +143,11 @@ class Four_way : public Cache {
                     *it++;
                 }
                 // cout<<"Deleting he min feq in the set, tag = " << min_it->tag << " feq = " << min_it->feq <<endl;
+                unsigned victim = min_it->tag;
                 all_set.at(index_dec).erase(min_it);
                 addElement(index_dec,  tag_dec);
+
+                return victim;
             }
 
         }
