@@ -42,13 +42,10 @@ int main(int argc, char** argv){
         
         // bool f_line = 0;
         while(getline(t1_file, line)){
-            // if(f_line == 0){
-            //     f_line = 1;
-            //     t1_out_file<<controler->read(line);
-            // } else {
-                t1_out_file<<controler->read(line)<<endl;
-                // cout<<line<<endl;
-            // }
+
+            t1_out_file<<controler->read(line)<<endl;
+            // t1_out_file<< "-1" <<endl;
+
         }
         
      

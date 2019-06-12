@@ -53,29 +53,34 @@ class Controler{
             // string addr = HexToBin(line);
             // cout<<"addr : "<<addr<<endl;
 
-            addr = num;
+            // addr = num;
             // addr = 0;
-            string index, tag;
+            // string index, tag;
             // tag = addr.substr(0, tag_size);
             // index = addr.substr(tag_size, index_bit);
             // if(asso == 2) index = "0";
             // cout<<"tag_size "<<tag_size<<endl;
             // cout<<"index_bit "<<index_bit<<endl;
 
-            for(int i = 0; i < tag_size; i++){
-                tag.append(string((addr[31 - i]) ? "1" : "0"));
-            }
-            for(int i = 0; i < index_bit; i++){
-                index.append(string(addr[31 - tag_size - i] ? "1" : "0"));
-            }
-            const char *cstr2 = tag.c_str();
-            int tag_dec = strtol(cstr2 , NULL, 2);
+            // for(int i = 0; i < tag_size; i++){
+            //     tag.append(string((addr[31 - i]) ? "1" : "0"));
+            // }
+            // for(int i = 0; i < index_bit; i++){
+            //     index.append(string(addr[31 - tag_size - i] ? "1" : "0"));
+            // }
+            // const char *cstr2 = tag.c_str();
+            // int tag_dec = strtol(cstr2 , NULL, 2);
 
 
-            const char *cstr3 = index.c_str();
-            int index_dec = strtol(cstr3 , NULL, 2);
+            // const char *cstr3 = index.c_str();
+            // int index_dec = strtol(cstr3 , NULL, 2);
 
             // cout << addr << " " << "tag = " <<tag << " index = " <<index<< endl;
+            
+            // cout<<"pow(2, index_bit) "<<pow(2, index_bit);
+            num = num / pow(2, offset);
+            int tag_dec = num / pow(2, index_bit);
+            int index_dec = num  % int(pow(2, index_bit));
             // cout << "tag_dec = "<<tag_dec<<" index_dec = "<<index_dec<<endl;
 
             int re = ca -> read(tag_dec, index_dec);

@@ -39,16 +39,17 @@ class Direct_map : public Cache{
 
         if(block_ptr[index_dec].valid == 0){
             // cout<<"load new data"<<endl;
+            cout<<"miss"<<endl;
             miss++;
             block_ptr[index_dec].tag = tag_dec;
             block_ptr[index_dec].valid = 1;
             return -1;
         }else if(block_ptr[index_dec].tag == tag_dec){
-            // cout<<"hit"<<endl;
+            cout<<"hit"<<endl;
             hit++;
             return -1;
         } else {
-            // cout<<"miss"<<endl;
+            cout<<"miss"<<endl;
             miss++;
             unsigned int victim = block_ptr[index_dec].tag;
             block_ptr[index_dec].tag = tag_dec;
@@ -131,7 +132,8 @@ class Four_way : public Cache {
                 addElement(index_dec,  tag_dec);
                 // cout<<"miss"<<endl;
                 return victim;
-            } else if(policy == 2){ //LRU
+            } else if(policy == 2){ 
+                miss++;
                 deque<struct Block>::iterator it = all_set.at(index_dec).begin();
                 deque<struct Block>::iterator min_it = all_set.at(index_dec).begin();
                 //find the samallest feq
@@ -146,7 +148,7 @@ class Four_way : public Cache {
                 unsigned victim = min_it->tag;
                 all_set.at(index_dec).erase(min_it);
                 addElement(index_dec,  tag_dec);
-
+                
                 return victim;
             }
 
