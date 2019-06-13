@@ -93,22 +93,13 @@ class Four_way : public Cache {
 
             if(valid == 1 && tag_dec == tag ) { 
                 hit++;
-                if(policy == 1 || policy == 0){  //LRU FIFO
+                if(policy == 1 ){  //LRU FIFO
                     // cout<<"improve priority"<<endl<<"------"<<endl;
                     it = all_set.at(index_dec).erase(it);
                     addElement(index_dec, tag);
                 }
                 else if(policy == 2){
                     it-> feq ++;
-                    // if(it->feq > (it+1)->feq){  //feq gretter latter one
-                    //     cout<<"it->feq = "<< (it)->feq <<"  is larger than next one"<< (it+1)->feq<<endl;
-                    //     it = all_set.at(index_dec).erase(it);
-                    //     struct Block element;
-                    //     element.valid = 1;
-                    //     element.tag = tag_dec;
-
-                    //     all_set.at(index_dec).insert(it+1, element);
-                    // }
                 }
                 return -1;
             }
@@ -153,8 +144,6 @@ class Four_way : public Cache {
             }
 
         }
-
-
         return 0 ;
     }
 
