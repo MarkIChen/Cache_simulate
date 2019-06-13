@@ -93,7 +93,7 @@ class Four_way : public Cache {
 
             if(valid == 1 && tag_dec == tag ) { 
                 hit++;
-                if(policy == 1 ){  //LRU FIFO
+                if(policy == 1 ){  //LRU 
                     // cout<<"improve priority"<<endl<<"------"<<endl;
                     it = all_set.at(index_dec).erase(it);
                     addElement(index_dec, tag);
