@@ -39,17 +39,17 @@ class Direct_map : public Cache{
 
         if(block_ptr[index_dec].valid == 0){
             // cout<<"load new data"<<endl;
-            cout<<"miss"<<endl;
+            // cout<<"miss"<<endl;
             miss++;
             block_ptr[index_dec].tag = tag_dec;
             block_ptr[index_dec].valid = 1;
             return -1;
         }else if(block_ptr[index_dec].tag == tag_dec){
-            cout<<"hit"<<endl;
+            // cout<<"hit"<<endl;
             hit++;
             return -1;
         } else {
-            cout<<"miss"<<endl;
+            // cout<<"miss"<<endl;
             miss++;
             unsigned int victim = block_ptr[index_dec].tag;
             block_ptr[index_dec].tag = tag_dec;

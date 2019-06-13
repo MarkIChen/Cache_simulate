@@ -85,7 +85,7 @@ class Controler{
 
             int re = ca -> read(tag_dec, index_dec);
 
-            cout<<"miss rate =  "<< ( double(ca->getMiss()) / double((ca->getMiss()) + double(ca->getHit())) )<<endl;
+            // cout<<"miss rate =  "<< ( double(ca->getMiss()) / double((ca->getMiss()) + double(ca->getHit())) )<<endl;
             // return -1;
             return re;
 
