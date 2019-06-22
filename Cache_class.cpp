@@ -103,6 +103,8 @@ class Four_way : public Cache {
                 }
                 return -1;
             }
+           
+
             *it++;
         }
         
@@ -116,12 +118,10 @@ class Four_way : public Cache {
         } else{  //queue is Full
            
             if(policy == 0 || policy == 1 ){
-                // cout<<"this set is full, deleting tag_dec = "<< all_set.at(index_dec).begin()->tag <<endl;
                 miss++;
                 unsigned victim = all_set.at(index_dec).begin()->tag;
                 all_set.at(index_dec).pop_front();
                 addElement(index_dec,  tag_dec);
-                // cout<<"miss"<<endl;
                 return victim;
             } else if(policy == 2){ 
                 miss++;
@@ -129,13 +129,13 @@ class Four_way : public Cache {
                 deque<struct Block>::iterator min_it = all_set.at(index_dec).begin();
                 //find the samallest feq
                 while(it != all_set.at(index_dec).end()){
-                    // cout<<"tag = "<<it->tag<<" feq = "<<it->feq<<endl;
+
+                    it-> feq --;
                     if(it->feq < min_it->feq ){
                         min_it = it;
                     }
                     *it++;
                 }
-                // cout<<"Deleting he min feq in the set, tag = " << min_it->tag << " feq = " << min_it->feq <<endl;
                 unsigned victim = min_it->tag;
                 all_set.at(index_dec).erase(min_it);
                 addElement(index_dec,  tag_dec);

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Cache_class.cpp"
-#include "HexToBin.cpp"
+
 using namespace std;
 
 class Controler{
