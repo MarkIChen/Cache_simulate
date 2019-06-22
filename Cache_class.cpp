@@ -130,7 +130,7 @@ class Four_way : public Cache {
                 //find the samallest feq
                 while(it != all_set.at(index_dec).end()){
 
-                    it-> feq --;
+                    it-> feq = it->feq -2 ;
                     if(it->feq < min_it->feq ){
                         min_it = it;
                     }
